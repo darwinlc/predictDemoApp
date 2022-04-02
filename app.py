@@ -1,3 +1,4 @@
+import re
 from flask import Flask, request, url_for, redirect, render_template
 from modelService import webcall
 
@@ -27,6 +28,7 @@ def predict():
         # prediction
         result_str = webcall(selected_sec, current_quantity, current_cash)
 
+    result_str = result_str.split("\n")
     return render_template("home.html", pred=result_str)
 
 

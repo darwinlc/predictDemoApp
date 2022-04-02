@@ -14,9 +14,9 @@ lookback_n = 30
 config_max_step = 120
 
 if reward_on_value:
-    reward_scaling = 2**-3
+    reward_scaling = 2 ** -3
 else:
-    reward_scaling = 2**-3
+    reward_scaling = 2 ** -3
 
 
 def ETL(stock_name):
@@ -122,12 +122,24 @@ def modelRun(start_idx, px_df, input_amount, input_stocks, last_model, stock_nam
     if actions_v == np.nan:
         actions_v = 0.0
 
-    return f"Action value: {actions_v}"
+    order_px = (
+        test_env.price_ary[test_env.day + test_env.run_index, 0]
+        + test_env.price_ary[test_env.day + test_env.run_index, 1]
+    ) / 2.0
 
-    # order_px = (
-    #     test_env.price_ary[test_env.day + test_env.run_index, 0]
-    #     + test_env.price_ary[test_env.day + test_env.run_index, 1]
-    # ) / 2.0
+    if actions_v > 0.1:
+        action_msg = "[BUY]"
+    elif actions_v < -0.1:
+        action_msg = "[SELL]"
+    else:
+        action_msg = ""
+
+    # 3decimal
+    action_v_str = int(actions_v * 1000) / 1000.0
+    order_px_str = int(order_px * 1000) / 1000.0
+    price_msg = f"Suggested Price: {order_px_str}"
+
+    return f"Action value: {action_v_str} {action_msg}\n{price_msg}"
 
     # if actions_v > 0:
     #     buy_num_shares = tradable_size(
@@ -168,10 +180,15 @@ def run(stock_name, current_q, current_c):
     # etl
     px_df, flag_start = ETL(stock_name)
     if (flag_start != None) and (model_file != None):
+        if flag_start:
+            msg_trade_start = "New Entry Signal: On"
+        else:
+            msg_trade_start = "New Entry Signal: Off"
+
         model_result = modelRun(
             [px_df.shape[0] - 1], px_df, current_c, current_q, model_file, stock_name
         )
-        return model_result
+        return "\n".join([model_result, msg_trade_start])
     else:
         return "Error when loading data/model"
 

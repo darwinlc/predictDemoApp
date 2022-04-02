@@ -17,12 +17,15 @@
         <h1>Predict Demo</h1>
 
         <!-- Form to enter new data for predictions  -->
+        <!--  -->
         <form action="{{ url_for('predict')}}" method="POST">
-            Security Name: <input type="text" name="Security" placeholder="BTC" required="required" /><br>
-            Current Position:<input type="decimal" name="Current Quantity" placeholder="0.01" required="required"
-                min="0" max="1000" /><br>
-            Current Cash: <input type="decimal" name="Current Cash" placeholder="1000.0" required="required" min="0"
-                max="10000" /><br>
+            Security:
+            <input type="text" name="Security" placeholder="BTC" required="required" />
+
+            Position:<input type="decimal" name="Current Quantity" placeholder="0.01" required="required" min="0"
+                max="1000" />
+            Cash: <input type="decimal" name="Current Cash" placeholder="1000.0" required="required" min="0"
+                max="10000" />
             <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
         </form>
 
@@ -31,7 +34,9 @@
 
 
     </div>
-    {{pred}}
+    {% for para in pred %}
+    <p>{{para}}</p>
+    {% endfor %}
 
 </body>
 
