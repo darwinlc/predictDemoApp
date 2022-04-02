@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+modelSave/
 build/
 develop-eggs/
 notebooks/

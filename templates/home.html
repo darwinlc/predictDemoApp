@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Predict Demo</title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}">
+
+</head>
+
+<body>
+    <div class="login">
+        <h1>Predict Demo</h1>
+
+        <!-- Form to enter new data for predictions  -->
+        <form action="{{ url_for('predict')}}" method="POST">
+            Security Name: <input type="text" name="Security" placeholder="BTC" required="required" /><br>
+            Current Position:<input type="decimal" name="Current Quantity" placeholder="0.01" required="required"
+                min="0" max="1000" /><br>
+            Current Cash: <input type="decimal" name="Current Cash" placeholder="1000.0" required="required" min="0"
+                max="10000" /><br>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+        </form>
+
+        <br>
+        <br>
+
+
+    </div>
+    {{pred}}
+
+</body>
+
+</html>
