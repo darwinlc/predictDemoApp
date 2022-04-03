@@ -111,7 +111,13 @@ def modelRun(start_idx, px_df, input_amount, input_stocks, last_model, stock_nam
     )
     state = test_env.reset()
 
-    test_model = PPO.load(last_model, device="cpu")
+    custom_objects = {
+        "learning_rate": 0.0,
+        "lr_schedule": lambda _: 0.0,
+        "clip_range": lambda _: 0.0,
+    }
+
+    test_model = PPO.load(last_model, custom_objects=custom_objects)
     test_model = test_model.policy.eval()
 
     action = test_model.predict(state)[0]
