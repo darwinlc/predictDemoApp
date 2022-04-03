@@ -111,7 +111,7 @@ def modelRun(start_idx, px_df, input_amount, input_stocks, last_model, stock_nam
     )
     state = test_env.reset()
 
-    test_model = PPO.load(last_model)
+    test_model = PPO.load(last_model, device="cpu")
     test_model = test_model.policy.eval()
 
     action = test_model.predict(state)[0]
