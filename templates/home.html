@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
     <title>Predict Demo</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
@@ -17,7 +17,6 @@
         <h1>Predict Demo</h1>
 
         <!-- Form to enter new data for predictions  -->
-        <!--  -->
         <form action="{{ url_for('predict')}}" method="POST">
             Security:
             <input type="text" name="Security" placeholder="BTC" required="required" />
