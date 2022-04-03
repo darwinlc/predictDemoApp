@@ -3,40 +3,42 @@
 
 <head>
     <title>Predict Demo</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/siwalikm/quick-form-css@2.2.2/qfc-dark.css">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}"> -->
 
 </head>
 
 <body>
-    <div class="login">
-        <h1>Predict Demo</h1>
+    <div class="qfc-container">
+        <h3>Predict Demo</h3>
 
         <!-- Form to enter new data for predictions  -->
         <form action="{{ url_for('predict')}}" method="POST">
-            Security:
-            <input type="text" name="Security" placeholder="BTC" required="required" />
-
-            Position:<input type="decimal" name="Current Quantity" placeholder="0.01" required="required" min="0"
-                max="1000" />
-            Cash: <input type="decimal" name="Current Cash" placeholder="1000.0" required="required" min="0"
-                max="10000" />
+            <label for="Security">Security: </label>
+            <input type="text" name="Security" list="seclist" placeholder="BTC" required="required" />
+            <datalist id="seclist">
+                <option>BTC</option>
+                <option>CMRE</option>
+            </datalist>
+            <label for="Current Quantity">Position:</label>
+            <input type="decimal" name="Current Quantity" placeholder="0.01" required="required" min="0" max="1000" />
+            <label for="Current Cash">Cash:</label>
+            <input type="decimal" name="Current Cash" placeholder="1000.0" required="required" min="0" max="10000" />
             <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
         </form>
 
         <br>
         <br>
-
+        {% for para in pred %}
+        <p>{{para}}</p>
+        {% endfor %}
 
     </div>
-    {% for para in pred %}
-    <p>{{para}}</p>
-    {% endfor %}
-
 </body>
 
 </html>
