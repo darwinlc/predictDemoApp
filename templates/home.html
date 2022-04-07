@@ -17,6 +17,11 @@
     <div class="qfc-container">
         <h3>Predict Demo</h3>
 
+        {% for para in pred %}
+        <p>{{para}}</p>
+        {% endfor %}
+        <br>
+
         <!-- Form to enter new data for predictions  -->
         <form action="{{ url_for('predict')}}" method="POST">
             <label for="Security">Security: </label>
@@ -35,10 +40,7 @@
         </form>
 
         <br>
-        <br>
-        {% for para in pred %}
-        <p>{{para}}</p>
-        {% endfor %}
+
 
     </div>
 </body>
