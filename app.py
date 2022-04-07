@@ -27,6 +27,7 @@ def predict():
     else:
         # prediction
         result_str = webcall(selected_sec, current_quantity, current_cash)
+        result_str = f"Result for Security {selected_sec}\n{result_str}"
 
     result_str = result_str.split("\n")
     return render_template("home.html", pred=result_str)
