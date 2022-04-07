@@ -20,7 +20,7 @@ else:
 
 
 def ETL(stock_name):
-    stock_tic_mapper = {"BTC": "BTC-USD", "CMRE": "CMRE"}
+    stock_tic_mapper = {"BTC": "BTC-USD", "CMRE": "CMRE", "DHT": "DHT", "SBLK": "SBLK"}
     tic_list = [stock_tic_mapper.get(stock_name)]
     today_d = datetime.today()
     start_d = today_d - timedelta(days=40)
@@ -67,6 +67,8 @@ def getStockConfig(stock_name):
     security_config = {
         "BTC": [0.001, 0.0, 0.0, 10.0, 0.002],
         "CMRE": [1.0, 0.0, 0.0, 10.0, 1.0],
+        "DHT": [1.0, 0.0, 0.0, 10.0, 1.0],
+        "SBLK": [1.0, 0.0, 0.0, 10.0, 1.0],
     }
     return security_config.get(stock_name, None)
 
@@ -179,7 +181,12 @@ def modelRun(start_idx, px_df, input_amount, input_stocks, last_model, stock_nam
 
 
 def getModelFile(stock_name):
-    model_mapping = {"BTC": "./model/BTC_model.zip", "CMRE": "./model/CMRE_model.zip"}
+    model_mapping = {
+        "BTC": "./model/BTC_model.zip",
+        "CMRE": "./model/CMRE_model.zip",
+        "DHT": "./model/DHT_model.zip",
+        "SBLK": "./model/SBLK_model.zip",
+    }
     return model_mapping.get(stock_name, None)
 
 
