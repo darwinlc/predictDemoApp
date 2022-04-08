@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # model = load_model("deployment_28042020")
 
-supported_sec_list = ["BTC", "CMRE", "DHT", "SBLK"]
+supported_sec_list = ["BTC", "CMRE", "DHT", "SBLK", "PB.HK"]
 
 
 @app.route("/")
