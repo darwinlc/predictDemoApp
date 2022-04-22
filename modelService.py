@@ -129,10 +129,13 @@ def modelRun(start_idx, px_df, input_amount, input_stocks, last_model, stock_nam
         "clip_range": lambda _: 0.0,
     }
 
-    test_model = PPO.load(last_model, custom_objects=custom_objects)
-    test_model = test_model.policy.eval()
+    test_model = []
+    for model_file_i in last_model:
+        model_i = PPO.load(model_file_i, custom_objects=custom_objects)
+        test_model.append(model_i.policy.eval())
 
-    action = test_model.predict(state)[0]
+    action = [model_i.predict(state)[0] for model_i in test_model]
+    action = sum(action) / len(action)
     # actions -> percentage of stock or cash
     # add clip at 0.9
     actions_v = action[0]
@@ -189,11 +192,11 @@ def modelRun(start_idx, px_df, input_amount, input_stocks, last_model, stock_nam
 
 def getModelFile(stock_name):
     model_mapping = {
-        "BTC": "./model/BTC_model.zip",
-        "CMRE": "./model/CMRE_model.zip",
-        "DHT": "./model/DHT_model.zip",
-        "SBLK": "./model/SBLK_model.zip",
-        "PB.HK": "./model/PBHK_model.zip",
+        "BTC": ["./model/BTC_model_1.zip", "./model/BTC_model_2.zip"],
+        "CMRE": ["./model/CMRE_model_1.zip", "./model/CMRE_model_2.zip"],
+        "DHT": ["./model/DHT_model_1.zip", "./model/DHT_model_2.zip"],
+        "SBLK": ["./model/SBLK_model_1.zip", "./model/SBLK_model_2.zip"],
+        "PB.HK": ["./model/PBHK_model_1.zip", "./model/PBHK_model_2.zip"],
     }
     return model_mapping.get(stock_name, None)
 

@@ -76,7 +76,7 @@ class SingleStockTradingEnv(gym.Env):
         initial_capital=1e6,
         buy_cost_pct=1e-3,
         sell_cost_pct=1e-3,
-        reward_scaling=2**-11,
+        reward_scaling=2 ** -11,
         initial_stocks=None,
         max_step=30,
     ):
@@ -129,7 +129,8 @@ class SingleStockTradingEnv(gym.Env):
         # cash + cash/(coin_value + cash) + GAF dimension
         self.gaf = GAF()
         self.gaf_dim_sum = self.gaf_dim[0] + self.gaf_dim[1]
-        self.state_dim = 2 * self.gaf_dim_sum + self.gaf_dim_sum * self.gaf_dim_sum
+        # self.state_dim = 2 * self.gaf_dim_sum + self.gaf_dim_sum * self.gaf_dim_sum
+        self.state_dim = self.gaf_dim_sum + self.gaf_dim_sum * self.gaf_dim_sum
 
         print("State Dim: ", self.state_dim)
 
@@ -302,9 +303,9 @@ class SingleStockTradingEnv(gym.Env):
             dtype=np.float32,
         )
         # normalized cash by comparing to initial capital (default weight at 2.0)
-        norm_cash = np.array(
-            self.amount / (2.0 * self.initial_capital), dtype=np.float32
-        )
+        # norm_cash = np.array(
+        #     self.amount / (2.0 * self.initial_capital), dtype=np.float32
+        # )
 
         # predict prx
         px_index_st = max(0, self.day + self.run_index - self.lookback_n + 1)
@@ -321,9 +322,9 @@ class SingleStockTradingEnv(gym.Env):
         )
         g, _, _, _ = self.gaf(new_price)
 
+        # np.tile(norm_cash, self.gaf_dim_sum),
         return np.hstack(
             (
-                np.tile(norm_cash, self.gaf_dim_sum),
                 np.tile(cash_ratio, self.gaf_dim_sum),
                 g.flatten(),
             )
