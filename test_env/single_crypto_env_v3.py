@@ -90,7 +90,7 @@ class SingleStockTradingEnv(gym.Env):
         # lookback px history; default 30; to predict using FFT
         self.lookback_n = config.get("lookback_n", 30)
         # GAF graph (v1, v2): v1: history, v2: fft prediction
-        self.gaf_dim = config.get("gaf_dim", (10, 3))
+        self.gaf_dim = config.get("gaf_dim", (15, 5))
 
         # time duration
         n = price_ary.shape[0]
@@ -303,9 +303,9 @@ class SingleStockTradingEnv(gym.Env):
             dtype=np.float32,
         )
         # normalized cash by comparing to initial capital (default weight at 2.0)
-        # norm_cash = np.array(
-        #     self.amount / (2.0 * self.initial_capital), dtype=np.float32
-        # )
+        norm_cash = np.array(
+            self.amount / (2.0 * self.initial_capital), dtype=np.float32
+        )
 
         # predict prx
         px_index_st = max(0, self.day + self.run_index - self.lookback_n + 1)
@@ -322,13 +322,14 @@ class SingleStockTradingEnv(gym.Env):
         )
         g, _, _, _ = self.gaf(new_price)
 
-        # np.tile(norm_cash, self.gaf_dim_sum),
         return np.hstack(
             (
+                np.tile(norm_cash, self.gaf_dim_sum),
                 np.tile(cash_ratio, self.gaf_dim_sum),
                 g.flatten(),
             )
         )
+
 
     @staticmethod
     def sigmoid_sign(ary, thresh):

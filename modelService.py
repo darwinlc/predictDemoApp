@@ -231,7 +231,7 @@ def webcall(stock_name, current_q, current_c):
 
 
 def test_func():
-    v = run("BTC", np.array([0.1]), 1000.0)
+    v = run("CMRE", np.array([1]), 1000.0)
     print(v)
 
 
