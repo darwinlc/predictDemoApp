@@ -25,14 +25,14 @@
         <!-- Form to enter new data for predictions  -->
         <form action="{{ url_for('predict')}}" method="POST">
             <label for="Security">Security: </label>
-            <input type="text" name="Security" list="seclist" placeholder="BTC" required="required" />
+            <input type="text" name="Security" list="seclist" placeholder="DHT" required="required" />
             <datalist id="seclist">
                 <option>CMRE</option>
                 <option>SBLK</option>
                 <option>DHT</option>
             </datalist>
             <label for="Current Quantity">Position:</label>
-            <input type="decimal" name="Current Quantity" placeholder="0.01" required="required" min="0" max="1000" />
+            <input type="decimal" name="Current Quantity" placeholder="10" required="required" min="0" max="1000" />
             <label for="Current Cash">Cash:</label>
             <input type="decimal" name="Current Cash" placeholder="1000.0" required="required" min="0" max="10000" />
             <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
